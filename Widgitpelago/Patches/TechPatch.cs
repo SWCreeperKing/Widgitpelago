@@ -1,5 +1,6 @@
 using Assets.Source.Player;
 using HarmonyLib;
+using Widgitpelago.Archipelago;
 
 namespace Widgitpelago.Patches;
 
@@ -36,19 +37,19 @@ public static class TechPatch
         return true;
     }
 
-    // [HarmonyPatch(typeof(TechNode), "get_IsPurchased"), HarmonyPrefix]
-    // public static bool Purchased(ref bool __result)
-    // {
-    //     __result = false;
-    //     return false;
-    // }
-    //
-    // [HarmonyPatch(typeof(TechNode), "get_IsAvailable"), HarmonyPrefix]
-    // public static bool Available(TechNode __instance, ref bool __result)
-    // {
-    //     if (GamePlayer.Current.TechTier < __instance.Tier)
-    //         return false;
-    //     __result = __instance.Previous is null || __instance.Previous.IsPurchased;
-    //     return false;
-    // }
+    [HarmonyPatch(typeof(TechNode), "get_IsPurchased"), HarmonyPrefix]
+    public static bool Purchased(TechNode __instance, ref bool __result)
+    {
+        __result = WidgetClient.IdFrameMap.ContainsKey(__instance.Identifier);
+        return false;
+    }
+    
+    [HarmonyPatch(typeof(TechNode), "get_IsAvailable"), HarmonyPrefix]
+    public static bool Available(TechNode __instance, ref bool __result)
+    {
+        if (GamePlayer.Current.TechTier < __instance.Tier)
+            return false;
+        __result = __instance.Previous is null || __instance.Previous.IsPurchased;
+        return false;
+    }
 }

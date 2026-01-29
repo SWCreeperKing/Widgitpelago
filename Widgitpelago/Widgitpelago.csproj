@@ -24,9 +24,6 @@
 		<Reference Include="com.rlabrecque.steamworks.net">
 			<HintPath>F:\SteamLibrary\steamapps\common\WidgetInc\WidgetInc_Data\Managed\com.rlabrecque.steamworks.net.dll</HintPath>
 		</Reference>
-		<Reference Include="Newtonsoft.Json">
-			<HintPath>F:\SteamLibrary\steamapps\common\WidgetInc\WidgetInc_Data\Managed\Newtonsoft.Json.dll</HintPath>
-		</Reference>
 		<Reference Include="Unity.2D.Animation.Runtime">
 			<HintPath>F:\SteamLibrary\steamapps\common\WidgetInc\WidgetInc_Data\Managed\Unity.2D.Animation.Runtime.dll</HintPath>
 		</Reference>
@@ -381,7 +378,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Include="Archipelago\ApData.cs" />
+		<Compile Include="Archipelago\APGui.cs" />
 		<Compile Include="Archipelago\ApShenanigans.cs" />
+		<Compile Include="Archipelago\WidgetClient.cs" />
 		<Compile Include="Core.cs" />
 		<Compile Include="Helper.cs" />
 		<Compile Include="Patches\ForceCaveOptionPatch.cs" />
