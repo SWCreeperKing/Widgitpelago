@@ -59,9 +59,9 @@ public static class ApShenanigans
            .AddLocations(
                 "tech_tree",
                 techTreeData
-                   // .Append(new TechTreeData(["Starting Check (1)", "", "", "", "", "0"]))
-                   // .Append(new TechTreeData(["Starting Check (2)", "", "", "", "", "0"]))
-                   // .Append(new TechTreeData(["Starting Check (3)", "", "", "", "", "0"]))
+                   .Append(new TechTreeData(["Starting Check (1)", "", "", "", "", "0"]))
+                   .Append(new TechTreeData(["Starting Check (2)", "", "", "", "", "0"]))
+                   .Append(new TechTreeData(["Starting Check (3)", "", "", "", "", "0"]))
                    .Select(data => (string[])
                         [data.Tech, $"Tier {data.TierRequirement}".Replace("Tier 0", "Menu")]
                     )
@@ -112,28 +112,7 @@ public static class ApShenanigans
                          "progressive_tier", new Dictionary<string, int> { ["Progressive Tier"] = 12 },
                          ItemFactory.ItemClassification.Progression
                      )
-                    // .AddItems(
-                    //      ItemFactory.ItemClassification.Progression,
-                    //      items: techTreeData.Select(data => data.Tech)
-                    //                         .Where(s => !s.StartsWith("Tier") || s.EndsWith("Mastery")).ToArray()
-                    //  )
-                    
-                    // .AddItems(
-                    //      // ItemFactory.ItemClassification.Useful,
-                    //      // ItemFactory.ItemClassification.Filler,
-                    //      ItemFactory.ItemClassification.Progression,
-                    //      items: techTreeData.Where(tech => endingNodes.Contains(tech.Tech)).Select(data => data.Tech)
-                    //                         .Where(s => !s.StartsWith("Tier") || s.EndsWith("Mastery")).ToArray()
-                    //  )
-                    // .AddItems(
-                    //      ItemFactory.ItemClassification.Progression,
-                    //      items: techTreeData.Where(tech => !endingNodes.Contains(tech.Tech)).Select(data => data.Tech)
-                    //                         .Where(s => !s.StartsWith("Tier") || s.EndsWith("Mastery")).ToArray()
-                    //  )
-                    
                     .AddItems(
-                         // ItemFactory.ItemClassification.Useful,
-                         // ItemFactory.ItemClassification.Filler,
                          ItemFactory.ItemClassification.Filler,
                          items: techTreeData.Where(tech => endingNodes.Contains(tech.Tech) && tech.Unlock is "").Select(data => data.Tech)
                                             .Where(s => !s.StartsWith("Tier") || s.EndsWith("Mastery")).ToArray()
@@ -181,6 +160,7 @@ public static class ApShenanigans
            .UseInitFunction()
            .UseGenerateEarly()
            .AddUseUniversalTrackerPassthrough()
+           .UseGenerateEarly(method => method.AddCode(CreatePushPrecollected("Widget Factory")))
            .UseCreateRegions()
            .AddCreateItems()
            .UseSetRules(method => method
@@ -200,6 +180,9 @@ public static class ApShenanigans
         worldFactory.GenerateArchipelagoJson("0.6.5", Core.VersionNumber, "SW_CreeperKing");
 
         File.WriteAllLines($"{DataFolder}/idMap.txt", frameIdMap.Select(kv => $"{kv.Key}:{kv.Value}"));
+        if (File.Exists($"output/{Spreadsheet}")) { File.Delete($"output/{Spreadsheet}"); }
+
+        File.Move(Spreadsheet, $"output/{Spreadsheet}");
     }
 }
 

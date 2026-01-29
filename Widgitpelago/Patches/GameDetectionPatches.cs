@@ -39,7 +39,6 @@ public static class GameDetectionPatches
 
     public static void AddTech(string tech)
     {
-        Core.Log.Msg($"Adding Tech: [{tech}]");
         if (GamePlayer.Current.HasTech(tech)) return;
         GamePlayer.Current.AddTech(new TechNode($"AP__{tech}"));
     }

@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using Archipelago.MultiClient.Net.Enums;
@@ -6,6 +7,8 @@ using CreepyUtil.Archipelago;
 using CreepyUtil.Archipelago.ApClient;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
+using UnityEngine.UI;
+using Widgitpelago.Patches;
 
 namespace Widgitpelago.Archipelago;
 
@@ -39,9 +42,33 @@ public static class WidgetClient
 
         Client.OnConnectionEvent += _ =>
         {
-            GameUUID = (string)Client.SlotData["uuid"];
-            SaveGame.SavesPath = $"Archipelago/{GameUUID}";
-            if (!Directory.Exists(SaveGame.SavesPath)) Directory.CreateDirectory(SaveGame.SavesPath);
+            try
+            {
+                GameUUID = (string)Client.SlotData["uuid"];
+                ProductivityPatch.Multiplier = (long)Client.SlotData["production_multiplier"];
+                ProductivityPatch.HandMultiplier = (long)Client.SlotData["hand_crafting_multiplier"];
+
+                SaveGame.SavesPath = $"Archipelago/{GameUUID}";
+                var dir = new DirectoryInfo(SaveGame.SavesPath);
+
+                var saveField = typeof(SaveGame).GetField("SavesDir", BindingFlags.NonPublic | BindingFlags.Static);
+                saveField!.SetValue(null, dir);
+
+                SavePatch.SavePath = dir;
+                SavePatch.Files = null;
+                if (!dir.Exists) dir.Create();
+
+                var l = new List<SaveGameFile>();
+                SavePatch.GetSavePath(ref l);
+                
+                if (l.Count == 0) return;
+                MainMenuUI.Instance.GetPrivateField<Button>("_continueButton").interactable = true;
+                MainMenuUI.Instance.GetPrivateField<Button>("_loadGameButton").interactable = true;
+            }
+            catch (Exception e)
+            {
+                Core.Log.Error(e);
+            }
         };
 
         Client.OnConnectionErrorReceived += (e, s) => { Core.Log.Error(e); };
@@ -56,7 +83,6 @@ public static class WidgetClient
         if (!int.TryParse(addressSplit[1], out var port)) return ["Port is incorrect"];
 
         var login = new LoginInfo(port, slotName, addressSplit[0], password);
-
 
         return Client.TryConnect(login, "Widget Inc", ItemsHandlingFlags.AllItems);
     }
@@ -75,8 +101,7 @@ public static class WidgetClient
             
             foreach (var item in Client.GetOutstandingItems()!)
             {
-                //todo: items
-                // ItemHandler.ProcessItem(item);
+                 ItemHandler.HandleItem(item);
             }
         }
         catch (Exception e)

@@ -381,12 +381,15 @@
 		<Compile Include="Archipelago\ApData.cs" />
 		<Compile Include="Archipelago\APGui.cs" />
 		<Compile Include="Archipelago\ApShenanigans.cs" />
+		<Compile Include="Archipelago\ItemHandler.cs" />
 		<Compile Include="Archipelago\WidgetClient.cs" />
 		<Compile Include="Core.cs" />
 		<Compile Include="Helper.cs" />
 		<Compile Include="Patches\ForceCaveOptionPatch.cs" />
 		<Compile Include="Patches\GameDetectionPatches.cs" />
 		<Compile Include="Patches\ProductivityPatch.cs" />
+		<Compile Include="Patches\RocketPatch.cs" />
+		<Compile Include="Patches\SavePatch.cs" />
 		<Compile Include="Patches\StoragePatch.cs" />
 		<Compile Include="Patches\TechPatch.cs" />
 	</ItemGroup>
@@ -396,6 +399,6 @@
 	</ItemGroup>
 	
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="COPY &quot;$(TargetPath)&quot; &quot;F:\SteamLibrary\steamapps\common\WidgetInc\Mods&quot;" />
+		<Exec Command="COPY &quot;$(TargetPath)&quot; &quot;F:\SteamLibrary\steamapps\common\WidgetInc\Mods\SW_CreeperKing.Widgitpelago&quot;" />
 	</Target>
 </Project>

@@ -8,7 +8,7 @@ namespace Widgitpelago.Patches;
 [PatchAll]
 public static class StoragePatch
 {
-    public static BigInteger InventorySize = new(4000);
+    public static BigInteger InventorySize = new(5000);
     
     [HarmonyPatch(typeof(GamePlayer), "GetInventoryCapacity"), HarmonyPostfix]
     public static void StorageSize(ItemType type, ref BigInteger __result)

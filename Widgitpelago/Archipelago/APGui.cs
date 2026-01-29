@@ -77,6 +77,7 @@ public class APGui : MonoBehaviour
             }
 
             State = "";
+            SaveFile();
         }
 
         if (Client.IsConnected && GUI.Button(new Rect(20 + Offset.x, 210 + Offset.y, 180, 30), "Disconnect"))
