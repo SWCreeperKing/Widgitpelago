@@ -22,7 +22,7 @@ Help support me, this and future projects on [Patreon](https://www.patreon.com/c
     - The default Widget Inc install directory (for steam): C:\Program Files (x86)\Steam\steamapps\common\WidgetInc
     - Recommended melon version: 7.1
 - Launch the game and close it. This will finalize the Melon installation.
-- Download and extract the `SW_CreeperKing.ArchipelagoSurvivors.zip` from
+- Download and extract the `SW_CreeperKing.Widgitpelago.zip` from
   the [latest release page](https://github.com/SWCreeperKing/Widgitpelago/releases/latest).
     - Copy the `SW_CreeperKing.Widgitpelago` folder from the release zip into `Mods` under your game's install directory.
 - Launch the game again and you should see the connection input on the top left of the title screen!
