@@ -10,7 +10,7 @@ public static class ApShenanigans
     // Spreadsheet used for logic:
     // https://docs.google.com/spreadsheets/d/1IdcSvjcpVu7AlMY5EUUnbr9mLd9X6LaLiIemBAgD_gA/edit?usp=sharing
     public const string Spreadsheet = "Widget Inc - Sheet1.csv";
-    public const string DataFolder = "/WidgetInc/Mods/SW_CreeperKing.Widgitpelago/Data";
+    public const string DataFolder = "Mods/SW_CreeperKing.Widgitpelago/Data";
 
     public const string FileLink
         = "https://github.com/SWCreeperKing/Widgitpelago/blob/master/Widgitpelago/Archipelago/ApShenanigans.cs";
