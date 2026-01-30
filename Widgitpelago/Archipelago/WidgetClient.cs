@@ -1,6 +1,4 @@
 using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
 using Archipelago.MultiClient.Net.Enums;
 using Assets.Source.Util;
 using CreepyUtil.Archipelago;
@@ -25,13 +23,6 @@ public static class WidgetClient
         if (File.Exists("ApConnection.json"))
         {
             Data = JsonConvert.DeserializeObject<ApData>(File.ReadAllText("ApConnection.json").Replace("\r", ""));
-        }
-
-        if (File.Exists("ApConnection.txt"))
-        {
-            Data = new ApData();
-            SaveFile();
-            File.Delete("ApConnection.txt");
         }
 
         Client.OnConnectionLost += () =>

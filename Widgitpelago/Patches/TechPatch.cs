@@ -39,7 +39,6 @@ public static class TechPatch
         if (!tech.Identifier.StartsWith("AP__")) return false;
         tech = tech.Identifier[4..];
         return true;
-
     }
 
     [HarmonyPatch(typeof(TechNode), "get_IsPurchased"), HarmonyPrefix]

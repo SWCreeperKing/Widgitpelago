@@ -10,7 +10,7 @@ public static class ApShenanigans
     // Spreadsheet used for logic:
     // https://docs.google.com/spreadsheets/d/1IdcSvjcpVu7AlMY5EUUnbr9mLd9X6LaLiIemBAgD_gA/edit?usp=sharing
     public const string Spreadsheet = "Widget Inc - Sheet1.csv";
-    public const string DataFolder = "F:/SteamLibrary/steamapps/common/WidgetInc/Mods/SW_CreeperKing.Widgitpelago/Data";
+    public const string DataFolder = "/WidgetInc/Mods/SW_CreeperKing.Widgitpelago/Data";
 
     public const string FileLink
         = "https://github.com/SWCreeperKing/Widgitpelago/blob/master/Widgitpelago/Archipelago/ApShenanigans.cs";
@@ -125,13 +125,7 @@ public static class ApShenanigans
                     .AddCreateItems(method =>
                          method
                             .AddCode(CreateItemsFromMapCountGenCode("progressive_tier"))
-                            .AddCode(
-                                 """
-                                 for item, classification in item_table.items():
-                                     world.location_count -= 1
-                                     pool.append(world.create_item(item))
-                                 """
-                             )
+                            .AddCode(CreateItemsFromClassificationList())
                             .AddCode(CreateItemsFillRemainingWithItem("Motivational Poster"))
                      )
                     .GenerateItemsFile();
