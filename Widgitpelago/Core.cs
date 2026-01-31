@@ -1,8 +1,4 @@
-﻿using Assets.Behaviour.UI;
-using Assets.Behaviour.UI.MainMenu;
-using Assets.Source.Player;
-using Assets.Source.Player.Tech;
-using MelonLoader;
+﻿using MelonLoader;
 using UnityEngine;
 using Widgitpelago;
 using Widgitpelago.Archipelago;
@@ -14,7 +10,7 @@ namespace Widgitpelago
 {
     public class Core : MelonMod
     {
-        public const string VersionNumber = "0.1.0";
+        public const string VersionNumber = "0.1.2";
 
         public static GameObject ContinueButton;
         public static GameObject NewGameButton;
