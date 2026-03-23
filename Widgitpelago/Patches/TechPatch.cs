@@ -129,9 +129,9 @@ public static class TechPatch
         return textLine;
     }
 
-    [HarmonyPatch(typeof(TechTreeNode), "AddTooltipCustomContent"), HarmonyPostfix]
-    public static void FinalizerTest()
-    {
-        throw new NullReferenceException("teehee");
-    }
+    // [HarmonyPatch(typeof(TechTreeNode), "AddTooltipCustomContent"), HarmonyPostfix]
+    // public static void FinalizerTest()
+    // {
+    //     throw new NullReferenceException("teehee");
+    // }
 }

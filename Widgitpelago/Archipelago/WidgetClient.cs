@@ -6,7 +6,6 @@ using CreepyUtil.Archipelago;
 using CreepyUtil.Archipelago.ApClient;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
-using UnityEngine;
 using UnityEngine.UI;
 using Widgitpelago.Patches;
 
@@ -22,11 +21,9 @@ public static class WidgetClient
     public static Dictionary<string, string> FrameIdMap;
     public static Dictionary<string, string> IdFrameMap;
 
-    public static string[][] ScoutHintList;
     public static ApClient Client = new(new TimeSpan(0, 1, 0));
     public static ApData Data = new();
     public static string GameUUID = "";
-    public static long ScoutLevel;
 
     public static void Init()
     {
@@ -65,10 +62,6 @@ public static class WidgetClient
                 SavePatch.SavePath = dir;
                 SavePatch.Files = null;
                 if (!dir.Exists) dir.Create();
-
-                ScoutLevel = Client.SlotData.TryGetValue("starting_tier_producers", out var scoutHintLevel)
-                    ? (long)scoutHintLevel
-                    : 5;
 
                 CustomAssets.PopulateSprites(Core.Locations);
 

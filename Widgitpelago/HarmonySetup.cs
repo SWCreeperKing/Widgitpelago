@@ -8,7 +8,7 @@ public static class HarmonySetup
 {
     public static void Init(Assembly assembly, HarmonyLib.Harmony harmonyInstance)
     {
-        var finalizer = new HarmonyMethod(typeof(HarmonySetup).GetMethod("Finalizer"));
+        // var finalizer = new HarmonyMethod(typeof(HarmonySetup).GetMethod("Finalizer"));
 
         var classesToPatch = assembly.GetTypes()
                                      .Where(t => t.GetCustomAttributes(typeof(PatchAllAttribute), false).Any())

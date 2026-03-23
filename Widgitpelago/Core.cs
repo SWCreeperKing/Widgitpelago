@@ -39,9 +39,6 @@ public class Core : MelonMod
             
         WidgetClient.IdFrameMap = WidgetClient.FrameIdMap.ToDictionary(kv => kv.Value, kv => kv.Key);
 
-        WidgetClient.ScoutHintList = File.ReadAllLines($"{DataFolder}/scoutHints.txt")
-                                         .Select(s => s.Split(',').Select(s => s.Trim()).ToArray()).ToArray();
-
         WidgetClient.RequiresMap = File.ReadAllLines($"{DataFolder}/requireMap.txt")
                                        .Select(s => s.Split(':')).ToDictionary(
                                             arr => arr[0], arr => arr[1].Split(',')
