@@ -21,20 +21,9 @@ public static class GameDetectionPatches
 
         TechNode ironOre = "t1f_iron_ore";
         ironOre.CostMultiplier = 0;
-        
+
         TechNode ironSmelter = "t1f_iron_ingot";
         ironSmelter.CostMultiplier = 0;
-        
-        // var tech = GamePlayer.Current.GetPrivateField<bool[]>("_techUnlocked");
-        // for (var i = 0; i < tech.Length; i++)
-        // {
-        //     tech[i] = false;
-        // }
-        
-        // SetTier(1);
-        // AddTech("t1_tech");
-        // AddTech("t1f_iron_ore");
-        // AddTech("t1f_iron_ingot");
     }
 
     public static void AddTech(string tech)

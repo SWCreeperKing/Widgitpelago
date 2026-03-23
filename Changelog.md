@@ -1,3 +1,14 @@
+v0.2
+- [ApWorld] Fixed minor logic bugs
+  - `Napalm Charge` not requiring  `Spinning Widget`
+  - `N-Step Branch Prediction` requiring `Ascended Widget` instead of `Unshackled Widget`
+- [Client] Added Custom Assets support
+- [Client] Implemented scouting locations
+  - status messages (top right) now displays sent/recieved items
+  - tech tree tooltips now show the item it sends and info about the item
+- [Client] Improved Tech Tree Readability
+
+---
 v0.1.2
 - [ApWorld] fixed minor logic bugs
     - `Indentured Servitude` requiring `Integrated Widget` instead of `Mainframe Widget`

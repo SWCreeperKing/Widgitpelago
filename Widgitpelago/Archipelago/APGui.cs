@@ -1,10 +1,7 @@
-﻿using MelonLoader;
-using UnityEngine;
-using Widgitpelago.Archipelago;
-using static CreepyUtil.Archipelago.ArchipelagoTag;
+﻿using UnityEngine;
 using static Widgitpelago.Archipelago.WidgetClient;
 
-namespace Widgitpelago;
+namespace Widgitpelago.Archipelago;
 
 // stolen from: https://github.com/FyreDay/TCG-CardShop-Sim-APClient/blob/master/APGui.cs
 public class APGui : MonoBehaviour
@@ -13,32 +10,11 @@ public class APGui : MonoBehaviour
     public static string State = "";
     public static Vector2 Offset = new(100, 100);
 
-    public static GUIStyle TextStyle = new()
-    {
-        fontSize = 12,
-        normal =
-        {
-            textColor = Color.white,
-        },
-    };
+    public static GUIStyle TextStyle = new() { fontSize = 12, normal = { textColor = Color.white, }, };
 
-    public static GUIStyle TextStyleGreen = new()
-    {
-        fontSize = 12,
-        normal =
-        {
-            textColor = Color.green,
-        },
-    };
+    public static GUIStyle TextStyleGreen = new() { fontSize = 12, normal = { textColor = Color.green, }, };
 
-    public static GUIStyle TextStyleRed = new()
-    {
-        fontSize = 12,
-        normal =
-        {
-            textColor = Color.red,
-        },
-    };
+    public static GUIStyle TextStyleRed = new() { fontSize = 12, normal = { textColor = Color.red, }, };
 
     void OnGUI()
     {
@@ -57,27 +33,29 @@ public class APGui : MonoBehaviour
             GUI.Label(new Rect(20 + Offset.x, 140 + Offset.y, 300, 30), "Slot", TextStyle);
             Data.SlotName = GUI.TextField(new Rect(20 + Offset.x, 160 + Offset.y, 180, 25), Data.SlotName, 25);
         }
-        else
-        {
-            GUI.Box(new Rect(10 + Offset.x, 10 + Offset.y + 100, 200, 150), "AP Client");
-        }
+        else { GUI.Box(new Rect(10 + Offset.x, 10 + Offset.y + 100, 200, 150), "AP Client"); }
 
         Core.ContinueButton?.SetActive(Client.IsConnected);
         Core.NewGameButton?.SetActive(Client.IsConnected);
         Core.LoadGameButton?.SetActive(Client.IsConnected);
-        
-        if (!Client.IsConnected && GUI.Button(new Rect(20 + Offset.x, 210 + Offset.y, 180, 30), "Connect"))
-        {
-            var error = TryConnect(Data.AddressPort, Data.Password, Data.SlotName);
-            
-            if (error is not null)
-            {
-                State = string.Join("\n", error);
-                return;
-            }
 
-            State = "";
-            SaveFile();
+        if (!Client.IsConnected)
+        {
+            Data.UseCustomAssets = GUI.Toggle(new Rect(20 + Offset.x, 190 + Offset.y, 180, 30), Data.UseCustomAssets, "Use Custom Assets"); 
+
+            if (GUI.Button(new Rect(20 + Offset.x, 210 + Offset.y, 180, 30), "Connect"))
+            {
+                var error = TryConnect(Data.AddressPort, Data.Password, Data.SlotName);
+
+                if (error is not null)
+                {
+                    State = string.Join("\n", error);
+                    return;
+                }
+
+                State = "";
+                SaveFile();
+            }
         }
 
         if (Client.IsConnected && GUI.Button(new Rect(20 + Offset.x, 210 + Offset.y, 180, 30), "Disconnect"))
@@ -85,8 +63,10 @@ public class APGui : MonoBehaviour
             Client.TryDisconnect();
         }
 
-        GUI.Label(new Rect(20 + Offset.x, 240 + Offset.y, 300, 30),
+        GUI.Label(
+            new Rect(20 + Offset.x, 240 + Offset.y, 300, 30),
             State != "" ? State : Client.IsConnected ? "Connected" : "Not Connected",
-            Client.IsConnected ? TextStyleGreen : TextStyleRed);
+            Client.IsConnected ? TextStyleGreen : TextStyleRed
+        );
     }
 }

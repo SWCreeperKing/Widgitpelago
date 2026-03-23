@@ -30,6 +30,12 @@ Help support me, this and future projects on [Patreon](https://www.patreon.com/c
 - 
 ---
 
+# Special Thanks
+- Sterlia
+  - Archipelago aseprite image
+
+---
+
 # Tools:
 
 - Melon Loader (obv)
