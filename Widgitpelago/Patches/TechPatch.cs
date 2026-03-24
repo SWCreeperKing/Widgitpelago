@@ -1,4 +1,6 @@
 using System.Numerics;
+using Archipelago.MultiClient.Net.Enums;
+using Archipelago.MultiClient.Net.Models;
 using Assets.Source.Item;
 using Assets.Source.Player;
 using Assets.Source.Util;
@@ -7,12 +9,17 @@ using HarmonyLib;
 using TMPro;
 using UnityEngine;
 using Widgitpelago.Archipelago;
+using Color = UnityEngine.Color;
 
 namespace Widgitpelago.Patches;
 
 [PatchAll]
 public static class TechPatch
 {
+    public static readonly Color NormalColor = new(0.5f, 1, 0.5f, 0.502f);
+    public static readonly Color HintedColor = new(0, 1, 1, 0.502f);
+    public static readonly Color HintedCantGetColor = new(0.3f, 0.3f, 1, 0.502f);
+
     [HarmonyPatch(typeof(GamePlayer), "SetTechTier"), HarmonyPrefix]
     public static bool SetTechTier(ref int tier)
     {
@@ -88,12 +95,20 @@ public static class TechPatch
     }
 
     [HarmonyPatch(typeof(TechTreeNode), "UpdateStatus"), HarmonyPostfix]
-    public static void IconReplace(TechTreeNode __instance, TechNode ___Node, SpriteRenderer ____icon)
+    public static void IconReplace(TechTreeNode __instance, SpriteRenderer ____icon, SpriteRenderer ____glow,
+        ref Color ____glowColor)
     {
-        var item = CustomAssets.ScoutItem(WidgetClient.IdFrameMap[___Node.Identifier]);
+        var item = CustomAssets.ScoutItem(WidgetClient.IdFrameMap[__instance.Node.Identifier]);
         var sprite = CustomAssets.ItemImage(item);
         sprite.texture.filterMode = FilterMode.Point;
         ____icon.sprite = sprite;
+
+        if (__instance.Node.IsPurchased) return;
+        if (!WidgetClient.HintData.TryGetValue(item.ItemId, out var hint)) return;
+        if (hint.Found || hint.Status is not HintStatus.Priority) return;
+        ____glowColor = __instance.Node.IsAvailable ? HintedColor : HintedCantGetColor;
+        ____glow.gameObject.SetActive(true);
+        Core.Log.Msg($"glow for [{item.ItemName}]");
     }
 
     [HarmonyPatch(typeof(TechTreeNode), "GetTooltipTitle"), HarmonyPostfix]
@@ -109,7 +124,7 @@ public static class TechPatch
         tooltip.SetText($"<color={item.Flags.GetColorFromItemFlag()}>{item.ItemName}</color>", 24);
         tooltip.SetText($"for {item.Player.Alias}");
         tooltip.SetText($"<color={item.Flags.GetColorFromItemFlag()}>{item.Flags.GetTextFromItemFlag()}</color>");
-        tooltip.SetText($"<color=#747474>{WidgetClient.IdFrameMap[___Node.Identifier]}</color>", 8);
+        tooltip.SetText($"<color=#747474>{WidgetClient.IdFrameMap[___Node.Identifier]}</color>", 12);
         if (____construction != null)
         {
             tooltip.AddTextLine("@TechNodeCancel");

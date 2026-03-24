@@ -1,3 +1,10 @@
+v0.2.1
+- [Client] Hinted items in the tech tree glow a different color if hinted
+  - Cyan: Hinted & In Logic
+  - Purple: Hinted & Not In Logic
+- [Client] Location name in tech tree's font size increased 8 -> 12
+
+---
 v0.2
 - [ApWorld] Fixed minor logic bugs
   - `Napalm Charge` not requiring  `Spinning Widget`

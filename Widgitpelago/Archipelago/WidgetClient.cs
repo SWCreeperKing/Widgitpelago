@@ -1,5 +1,6 @@
 using System.Reflection;
 using Archipelago.MultiClient.Net.Enums;
+using Archipelago.MultiClient.Net.Models;
 using Assets.Behaviour.UI;
 using Assets.Source.Util;
 using CreepyUtil.Archipelago;
@@ -23,6 +24,7 @@ public static class WidgetClient
 
     public static ApClient Client = new(new TimeSpan(0, 1, 0));
     public static ApData Data = new();
+    public static Dictionary<long, Hint> HintData = []; 
     public static string GameUUID = "";
 
     public static void Init()
@@ -46,7 +48,7 @@ public static class WidgetClient
                 ItemHandler.FramesHave.Clear();
                 ItemHandler.TiersHave = 0;
                 ItemHandler.LocalItemsReceived = 0; 
-                ItemHandler.TotalItemsReceived = Client.GetFromStorage("item_on", def: 0L); 
+                ItemHandler.TotalItemsReceived = Client.GetFromStorage("item_on", def: 0L);
                 CraftingCache.Clear();
                 
                 GameUUID = (string)Client.SlotData["uuid"];
@@ -75,6 +77,8 @@ public static class WidgetClient
             catch (Exception e) { Core.Log.Error(e); }
         };
 
+        Client.HintsTrackedEvent += hints => HintData = hints.ToDictionary(hint => hint.ItemId, hint => hint);
+
         Client.OnConnectionErrorReceived += (e, s) => { Core.Log.Error(e); };
     }
 
@@ -102,6 +106,7 @@ public static class WidgetClient
 
             if (!Client.IsConnected) return;
             if (Core.Scene is not "Game") return;
+            
             var items = Client.GetOutstandingItems()!;
             if (items.Length == 0) return;
 
